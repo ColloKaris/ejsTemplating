@@ -18,6 +18,11 @@ app.get('/', (req,res) => {
     res.render('home')
 })
 
+app.get('/r/:subreddit', (req,res) => {
+    const {subreddit} = req.params;
+    res.render('subreddit', {subreddit});
+})
+
 // path to a route that generates a random number
 app.get('/rand', (req,res) => {
     const num = Math.floor(Math.random() * 10) + 1;
