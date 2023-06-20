@@ -18,6 +18,12 @@ app.get('/', (req,res) => {
     res.render('home')
 })
 
+// path to a route that generates a random number
+app.get('/rand', (req,res) => {
+    const num = Math.floor(Math.random() * 10) + 1;
+    res.render('random', {num})
+})
+
 
 // listen at port 3000
 app.listen(3000, () => {
