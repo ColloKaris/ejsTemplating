@@ -7,6 +7,13 @@ const app = express();
 //require path
 const path = require('path')
 
+// Require the JSON data file
+const redditData = require('./data.json');
+
+//Serving Static Files eg CSS, JS
+app.use(express.static(path.join(__dirname, '/public')))
+
+
 // Tell your app to use EJS as its view engine
 app.set('view engine', 'ejs')
 //this line allows us to run the app from anywhere
@@ -25,7 +32,14 @@ app.get('/cats', (req,res) =>{
 
 app.get('/r/:subreddit', (req,res) => {
     const {subreddit} = req.params;
-    res.render('subreddit', {subreddit});
+    const data = redditData[subreddit];
+    if(data) {
+        res.render('subreddit', {...data}); // spreading it allows you to access
+    // individual properties like names, subscribers, post etc
+    } else {
+        res.render('notfound', { subreddit})
+    }
+    
 })
 
 // path to a route that generates a random number
